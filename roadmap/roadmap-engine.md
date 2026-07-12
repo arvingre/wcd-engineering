@@ -22,13 +22,22 @@ A Roadmap State is what a Plan sits in *between* Decisions — it persists until
 | **In Progress** | Implementation branch active. |
 | **Review** | Draft PR open, in Architecture Review or Implementation Review. |
 | **Approved** | Passed Human Approval, not yet merged. |
+| **Merged** | The PR has been merged to `main` (or a project's integration branch). A pure GitHub fact — nothing more. Not yet Completed. |
 | **Blocked** | Cannot proceed — either an unresolved external dependency, or an Escalation awaiting a specific decision-maker. Not terminal (see `## Transition Rules`). |
 | **Deferred** | Valid, but a Human decided not to proceed right now. Not terminal — resumes when its revisit condition is met. |
-| **Completed** | Merged to `main` (or a project's integration branch) and Validated per `architecture/engineering-workflow.md` Stage 9. |
+| **Completed** | Everything `Merged` implies, **plus**: post-merge Validation passed (`architecture/engineering-workflow.md` Stage 9), `docs/roadmap.md` synchronized, Knowledge Promotion evaluated, and no required deliverables remain. See `## Transition Rules`'s `Completion` row for the exact evidence checklist. |
 | **Closed** | Ended — either normally (after Completed) or early (abandoned/superseded). |
 | **Archived** | Permanently moved out of active consideration. Reopening requires a fresh, explicit justification, not routine. |
 
-**Terminology note:** `docs/roadmap.md` currently uses `Merged` for what this document calls `Completed` — same underlying state, different name in the two documents. This document doesn't rename `docs/roadmap.md`'s existing vocabulary (out of scope here — see `## Roadmap Vocabulary Update`); the two terms should be read as synonyms until a future Plan reconciles them.
+**`Merged` and `Completed` are not synonyms.** A PR can sit at `Merged` for a while before the Completion evidence is fully satisfied — the code landed, but the organizational bookkeeping (Validation, Roadmap sync, Knowledge Promotion) hasn't caught up yet. Treating "merged" as automatically meaning "done" is exactly the gap this reconciliation closes; `docs/roadmap.md`'s vocabulary now carries both states distinctly (see `## Roadmap Vocabulary Update`).
+
+### State chain (happy path)
+
+```
+Draft → In Progress → Review → Approved → Merged → Completed → Closed → Archived
+```
+
+`Blocked` and `Deferred` are not points on this line — they're branches any pre-Merged state can enter and later leave, per `## Transition Rules` below.
 
 ## Roadmap Inputs (Task 2)
 
@@ -46,13 +55,16 @@ A Roadmap State is what a Plan sits in *between* Decisions — it persists until
 | Decision | Trigger | Precondition | Current State | Next State | Required Evidence |
 |---|---|---|---|---|---|
 | **Approve** | A reviewer (Human, and only Human at the final gate) approves the PR at its current gate. | No open objection at that gate. | Review | Approved | The Approve Decision record — who approved, at which gate. |
-| **Merge** | A Human merges the Approved PR on GitHub (the Roadmap Engine observes this, never performs it). | GitHub Merge State confirms the PR is actually merged. | Approved | Completed | The Merge Decision record **and** confirmed GitHub Merge State — either alone is insufficient. |
-| **Close** | A Close decision, normal (post-Completed, Validated) or early (abandoned/superseded). | Completed (normal path), or any earlier state with a stated early-close reason. | Completed, or any pre-Completed state | Closed | The Close Decision record, with reason if early. |
+| **Merge** | A Human merges the Approved PR on GitHub (the Roadmap Engine observes this, never performs it). | GitHub Merge State confirms the PR is actually merged. | Approved | **Merged** | The Merge Decision record **and** confirmed GitHub Merge State — either alone is insufficient. This only establishes `Merged`, not `Completed` — see `Completion` below. |
+| **Completion** *(not a Decision Engine type — see note below)* | The Roadmap Engine evaluates whether a `Merged` Plan's completion evidence is fully satisfied. | All five items in Completion evidence, below. | Merged | Completed | GitHub merge confirmed; post-merge Validation passed; `docs/roadmap.md` synchronized; Knowledge Promotion evaluated; no required deliverables remain. All five, not a subset. |
+| **Close** | A Close decision, normal (post-Completed) or early (abandoned/superseded). | Completed (normal path), or any earlier state with a stated early-close reason. | Completed, or any pre-Completed state | Closed | The Close Decision record, with reason if early. |
 | **Reject** | A reviewer determines the PR/Plan cannot proceed as currently scoped. | A stated rejection reason. | Review or Approved | **Closed** if the reason means the current approach/scope is invalid (needs a fresh Plan, not a fix) — **Blocked** if the reason is an external, resolvable dependency or precondition. | The Reject Decision record with its reason — the reason is what determines which of the two next states applies, not the Reject decision alone. |
 | **Defer** | A Human (or OpenClaw, subject to Human confirmation) decides the Plan is valid but shouldn't proceed now. | A stated reason and, where known, a revisit condition. | Draft, In Progress, Review, or Approved | Deferred | The Defer Decision record with reason and revisit condition. |
 | **Escalate** | A reviewer, or a pattern `architecture/engineering-loop.md`'s Risk output surfaces, determines the Plan can't be resolved at the normal review level. | The Plan is stuck at a gate. | Review or Approved | Blocked | The Escalate Decision record with reason. |
 | **Archive** | A Human decides a `Closed` Plan should move permanently out of active consideration. | The Plan is Closed. | Closed | Archived | The Archive Decision record with reason. |
 | **Reopen** | A Human decides a `Closed` or `Archived` Plan needs to become active again. | A stated reason. | Closed or Archived | In Progress | The Reopen Decision record with reason. (Always routes through In Progress, even from Review-stage closes — reopening re-validates before resuming review, rather than assuming the old review state is still valid.) |
+
+**`Completion` is deliberately not one of `decision/decision-engine.md`'s eight Decision types**, and this document doesn't add a ninth one there (out of scope for this reconciliation — see Constraints). Merging is a Human action (the `Merge` Decision); becoming `Completed` is the Roadmap Engine *evaluating evidence* against the five-item checklist above, not a separate thing a Human clicks. In practice a Human (or OpenClaw) still confirms the checklist is satisfied — but the checklist, not a discrete approval click, is what the Transition Rule actually keys off.
 
 **`Blocked` is not a dead end.** Two different Decisions land there (`Reject` and `Escalate`) for two different reasons — the Required Evidence column is what distinguishes them, since the state alone doesn't say why a Plan is Blocked. Once the blocking condition clears (tracked via `## Dependency Handling`), the Plan resumes via a fresh ordinary Decision (typically `Approve`, or simply resuming implementation) — this document doesn't need a ninth Decision type for "unblock"; it's the same Transition Rules above, applied again once the precondition that was missing is satisfied.
 
@@ -60,7 +72,7 @@ A Roadmap State is what a Plan sits in *between* Decisions — it persists until
 
 In this order:
 
-1. **Approved and not yet Completed** — finishing something already past review outranks starting anything new. This keeps work-in-progress low and matches `docs/roadmap.md`'s existing Scheduling rule ("finish active work before opening a new Plan").
+1. **Approved, Merged, or otherwise not yet Completed** — finishing something already past review outranks starting anything new, whether it's still awaiting merge or already merged and just waiting on Completion evidence. This keeps work-in-progress low and matches `docs/roadmap.md`'s existing Scheduling rule ("finish active work before opening a new Plan").
 2. **Dependencies satisfied** — among what's left, exclude anything whose `depends_on` graph isn't fully resolved.
 3. **No Blocker** — exclude anything currently `Blocked`, or `blocked_by` something unresolved.
 4. **Highest priority** — among the remaining candidates, prefer the Human-assigned highest priority.
@@ -81,7 +93,7 @@ Four relationship types:
 
 | Relationship | Meaning | Example |
 |---|---|---|
-| **depends_on** | A general prerequisite — this Plan can't be considered *complete* until the other one is, but isn't necessarily actively stuck right now. | `PLAN-0009 depends_on PR #10 and PR #11` |
+| **depends_on** | A general prerequisite — this Plan can't be considered *complete* until the other one is, but isn't necessarily actively stuck right now. | `FOUNDATION-ROADMAP-ENGINE depends_on PR #10 and PR #11` (this document's own dependency on Decision Engine and Knowledge Promotion — see `## Roadmap Vocabulary Update` for why `FOUNDATION-ROADMAP-ENGINE`, not `PLAN-0009`, is this component's identifier) |
 | **blocked_by** | An *active*, immediate blocking relationship — this Plan literally cannot merge or proceed until the other one resolves. Typically used for stacked PRs. | `PR #4 blocked_by PR #3` |
 | **unblocks** | The inverse of `blocked_by`, stated from the other direction, so the blocking Plan's own record shows everything it's holding up, not just the blocked Plan's record showing what's holding it back. | `PR #3 unblocks PR #4` |
 | **supersedes** | Replacement, not sequencing — this Plan makes another one obsolete. The superseded Plan should be Closed (its Close Decision's reason references the superseding Plan). | A revised Plan `supersedes` an earlier, abandoned attempt at the same goal. |
@@ -136,9 +148,13 @@ This is the full cycle every other document in this Engineering OS is one piece 
 
 No step in this loop is optional, and no step is automatic past a Human decision point — that property is what makes it a *closed* loop rather than a one-way pipeline that eventually needs a human to manually intervene and restart it.
 
-## Roadmap Vocabulary Update (Task 7)
+## Roadmap Vocabulary Update
 
-`docs/roadmap.md`'s current `## Plan status vocabulary` section has `Draft`, `In Progress`, `Review`, `Approved`, `Merged`, `Closed` — missing `Blocked`, `Deferred`, and `Archived`, all three of which this document's state model needs. Adding only those three definitions to that section (reusing the same wording as `## Roadmap State model` above); no existing Plan row, status, or historical fact in `docs/roadmap.md` is rewritten.
+`docs/roadmap.md`'s `## Plan status vocabulary` section now carries all ten states from `## Roadmap State model` above, in state-chain order: `Draft`, `In Progress`, `Review`, `Approved`, `Merged`, `Blocked`, `Deferred`, `Completed`, `Closed`, `Archived`. `Merged` and `Completed` are defined as distinct states there, matching this document — not as synonyms, which an earlier version of this reconciliation incorrectly treated them as.
+
+**Component identifiers:** this document — the Roadmap Engine itself — is **not** `PLAN-0009`. `docs/roadmap.md`'s `PLAN-0009` slot belongs to `Playbooks`; renumbering existing `PLAN-0001`–`PLAN-0010` is explicitly out of scope for any reconciliation. Foundational Engineering-OS components that aren't part of the sequential `PLAN-XXXX` numbering use a `FOUNDATION-*` identifier instead, matching the pattern `FOUNDATION-WORKFLOW` and `FOUNDATION-LOOP` already established: this component is `FOUNDATION-ROADMAP-ENGINE`. `docs/roadmap.md`'s Completed Plans table now also carries `FOUNDATION-DECISION` (Decision Engine, PR #10), `FOUNDATION-KNOWLEDGE` (Knowledge Promotion, PR #11), and `FOUNDATION-ROADMAP-ENGINE` (this document, PR #12) — all three previously merged without a Roadmap row, now reconciled — each with status `Completed`, not `Merged`, since all four completion criteria are satisfied for each of them (merged, validated by review, present in the Roadmap, and their content already reflects Knowledge Promotion's own reasoning).
+
+No existing `PLAN-0001`–`PLAN-0010` row, status, or historical fact in `docs/roadmap.md` is rewritten by this reconciliation — only additions.
 
 ## Reference
 

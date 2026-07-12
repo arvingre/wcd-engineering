@@ -10,9 +10,10 @@
 - **In Progress** — implementation branch active.
 - **Review** — Draft PR open.
 - **Approved** — reviewed and awaiting merge.
-- **Merged** — PR merged to `main`; post-merge state sync may still be required.
+- **Merged** — the PR has been merged to `main`. A pure GitHub fact, nothing more — **not a synonym for Completed.** See `roadmap/roadmap-engine.md`.
 - **Blocked** — cannot proceed: an unresolved external dependency, or an Escalation awaiting a specific decision-maker. Not terminal — resumes once the blocking condition clears. See `roadmap/roadmap-engine.md`.
 - **Deferred** — valid, but a Human decided not to proceed right now. Not terminal — resumes when its revisit condition is met. See `roadmap/roadmap-engine.md`.
+- **Completed** — everything `Merged` implies, plus: post-merge Validation passed, this Roadmap synchronized, Knowledge Promotion evaluated, and no required deliverables remain. See `roadmap/roadmap-engine.md`'s `Completion` transition for the full evidence checklist.
 - **Closed** — ended without merge, with reason recorded.
 - **Archived** — permanently moved out of active consideration after being Closed. Reopening requires a fresh, explicit justification, not routine. See `roadmap/roadmap-engine.md`.
 
@@ -39,6 +40,9 @@ The Engineering OS foundation is established: identity boundary, project registr
 | PLAN-0005 | Engineering Memory | Merged | [#7](https://github.com/arvingre/wcd-engineering/pull/7) |
 | FOUNDATION-WORKFLOW | Engineering Workflow | Merged | [#5](https://github.com/arvingre/wcd-engineering/pull/5) |
 | FOUNDATION-LOOP | Engineering Loop | Merged | [#6](https://github.com/arvingre/wcd-engineering/pull/6) |
+| FOUNDATION-DECISION | Decision Engine | Completed | [#10](https://github.com/arvingre/wcd-engineering/pull/10) |
+| FOUNDATION-KNOWLEDGE | Knowledge Promotion | Completed | [#11](https://github.com/arvingre/wcd-engineering/pull/11) |
+| FOUNDATION-ROADMAP-ENGINE | Roadmap Engine | Completed | [#12](https://github.com/arvingre/wcd-engineering/pull/12) |
 
 ## In Progress
 
