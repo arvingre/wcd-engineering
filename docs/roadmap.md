@@ -11,7 +11,10 @@
 - **Review** — Draft PR open.
 - **Approved** — reviewed and awaiting merge.
 - **Merged** — PR merged to `main`; post-merge state sync may still be required.
+- **Blocked** — cannot proceed: an unresolved external dependency, or an Escalation awaiting a specific decision-maker. Not terminal — resumes once the blocking condition clears. See `roadmap/roadmap-engine.md`.
+- **Deferred** — valid, but a Human decided not to proceed right now. Not terminal — resumes when its revisit condition is met. See `roadmap/roadmap-engine.md`.
 - **Closed** — ended without merge, with reason recorded.
+- **Archived** — permanently moved out of active consideration after being Closed. Reopening requires a fresh, explicit justification, not routine. See `roadmap/roadmap-engine.md`.
 
 ## Plan lifecycle
 
