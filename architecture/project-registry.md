@@ -11,6 +11,19 @@ The single, unified entry point OpenClaw (and any other AI agent — Claude Code
 
 **Design intent:** this file is meant to scale to 100+ projects without restructuring. Each project gets one self-contained `###` entry under `## Projects`, following the shape in `## Project Template`. Adding project #101 should look exactly like adding project #2 did — a new subsection, not a schema change.
 
+## Current Engineering OS Plan
+
+| Field | Value |
+|---|---|
+| Active Plan | PLAN-0003 — Engineering Roadmap |
+| Status | In Progress |
+| Plan Sync | Pending — Memory Update step not yet complete |
+| Last Updated | 2026-07-13 |
+| Next Plan | PLAN-0004 — do not start until PLAN-0003 Plan Sync is closed |
+
+> Plan lifecycle gate: PR merged → **Memory Updated** → Roadmap Updated → Closed.
+> PLAN-0003 PR is merged to main; Memory Update is the remaining step.
+
 ## Projects
 
 ### devops-terraform-jenkins-eks
