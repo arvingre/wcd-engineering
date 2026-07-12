@@ -1,42 +1,52 @@
 # WCD Engineering Memory
 
-This directory stores long-term stable knowledge for the WCD Engineering OS.
+This directory stores durable, structured organizational knowledge for the WCD Engineering OS. Its governing architecture is `architecture/engineering-memory.md`.
+
+Memory records are summaries and indexes backed by authoritative evidence. GitHub, project repositories, adopted ADRs, CI reports, incident systems, and approved human decisions remain the source of truth.
 
 ## What belongs here
 
-- Engineering standards and principles (distilled, not raw)
-- Architecture decisions (ADRs)
-- Project state summaries (phase, branch, path)
-- Organization-level rules and approval boundaries
-- Bootstrap and recovery references
+- verified engineering Decisions
+- resolved or actively managed Incidents
+- validated Runbooks
+- evidence-backed Lessons
+- recurring validated Patterns
+- compact current Project State records
 
-## What does NOT belong here
+## What does not belong here
 
 - Terraform state files
-- Secrets, tokens, credentials, or passwords
-- Full project source code or complete Terraform modules
-- CI logs or build artifacts
-- Temporary task output or draft documents
-- Unreviewed incident data
+- secrets, tokens, credentials, passwords, or private keys
+- full source-code copies
+- raw CI logs or unrestricted production logs
+- temporary task output or speculative hypotheses
+- copied private chat transcripts
+- unreviewed model output
 
-## Source of truth
+## Directory contract
 
-GitHub and the project repositories remain the source of truth for:
-- Current code
-- Active Pull Requests
-- CI results
-- Branch state
-- Terraform module implementation
-
-Memory records here are pointers and summaries — always verify against live sources before acting.
-
-## Directory structure
-
-```
+```text
 memory/
-├── engineering/    # Standards, principles, cross-project engineering rules
-├── projects/       # Per-project state: paths, branches, phase, restrictions
-├── decisions/      # Architecture Decision Records (distilled)
-├── organizations/  # Org-level rules, team structure, approval chains
-└── bootstrap/      # Machine recovery and environment setup references
+  organization/
+    decisions/
+    lessons/
+    patterns/
+    runbooks/
+  projects/
+    <project-name>/
+      state.md
+      decisions/
+      incidents/
+      lessons/
+      patterns/
+      runbooks/
+  archive/
 ```
+
+Each durable record is stored in its own file and follows the record types, lifecycle, provenance, promotion, retrieval, staleness, and security rules in `architecture/engineering-memory.md`.
+
+Subdirectories are introduced when a real record is created; empty placeholder trees are not required.
+
+## Write policy
+
+All AI-authored memory changes use a feature branch and Draft PR. No AI agent writes directly to `main`, merges its own memory changes, invents an approval, or promotes an unverified claim into Active memory.
