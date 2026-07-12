@@ -40,3 +40,14 @@ Review Terraform structure, module boundaries, environment layout, and implement
 - Exact file references
 - Config excerpts or command output
 - Explicit risk classification
+
+## Required Standards (read before acting)
+
+Priority reading order:
+- standards/terraform/
+- standards/aws/
+- standards/kubernetes/
+- standards/storage/
+- policies/
+
+Do not modify Terraform state, apply, or destroy without explicit human approval.

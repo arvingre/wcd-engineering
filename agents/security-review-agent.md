@@ -40,3 +40,12 @@ Assess security posture, identity boundaries, and control gaps for engineering a
 - Specific paths and references
 - Clear issue statements
 - Distinction between verified fact and inference
+
+## Required Standards (read before acting)
+
+Priority reading order:
+- standards/security/
+- policies/
+- standards/ci/
+
+Do not output secrets, credentials or sensitive data.

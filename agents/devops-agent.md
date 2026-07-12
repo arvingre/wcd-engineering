@@ -40,3 +40,12 @@ Support platform and delivery workflow analysis, coordination, and documentation
 - File paths
 - Command output or document references
 - Clear separation of facts and recommendations
+
+## Default Context Loading
+
+Before working on any project:
+1. Read the project entry from architecture/project-registry.md
+2. Read relevant standards from wcd-engineering/standards/
+3. Read the target repository README, docs and current PR
+4. Do not rely only on memory for mutable project state
+5. Use GitHub and local repository as source of truth

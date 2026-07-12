@@ -40,3 +40,11 @@ Review platform-level design choices and alignment between standards, implementa
 - File-level references
 - Practical impact notes
 - Clear separation of findings and recommendations
+
+## Default Context Loading
+
+Before reviewing:
+1. Read architecture/project-registry.md
+2. Read standards/kubernetes/ and standards/aws/
+3. Read architecture/aws-eks-platform.md
+4. Read project-specific docs before forming an opinion
