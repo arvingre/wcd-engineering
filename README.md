@@ -13,7 +13,7 @@ It is not a business application repository. Source code, Terraform implementati
 ## Directory Structure
 
 - `standards/` - organization-level standards and draft policies
-- `architecture/` - platform overviews and reference maps
+- `architecture/` - platform overviews and reference maps, including `architecture/project-registry.md` — the entry point every AI agent (OpenClaw, Claude Code, or otherwise) reads before starting work on any project
 - `module-catalog/` - module interface index and ownership notes
 - `agents/` - role definitions and operating rules for AI agents
 - `prompts/` - reusable review and analysis prompts
