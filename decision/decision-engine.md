@@ -6,6 +6,8 @@ The Decision Engine turns a Human's decision into organizational state change �
 
 This is the deeper mechanism behind `architecture/engineering-workflow.md`'s Stage 10 (Memory Update) — that stage said memory gets updated after a merge; this document defines exactly how, for every kind of decision a Human can make, not just "merged."
 
+**Scope note (`adr/ADR-0006`):** the eight decision types below, and "never generated or self-applied by an AI agent," describe the Git/PR/Plan lifecycle specifically — not every judgment call an AI agent ever makes. `VISION.md`'s Decision component describes a separate, not-yet-implemented Operational Decision Layer that autonomously decides Continue/Retry/Rollback/Escalate/Wait/Cancel *during a Goal's execution* (e.g., mid-run of a Kubernetes health check) — a disjoint action space from the eight types here. See `adr/ADR-0006-operational-vs-git-lifecycle-decisions.md` for the boundary between the two.
+
 ## Decision types (Task 1)
 
 Eight decision types. Every one of them is a Human judgment call recorded by the Decision Engine, never generated or self-applied by an AI agent (an AI agent can propose — see `architecture/engineering-workflow.md` Stage 5–6 review comments — but proposing is not deciding).
