@@ -2,6 +2,10 @@
 
 wcd-engineering is the engineering standards, architecture decisions, organizational knowledge, and AI agent rules repository for the WCD DevOps workspace.
 
+Claude Code is our hands. OpenHands and OpenClaw are optional execution engines. WCD is the brain that owns Goals, Decisions, Organization Memory, and Continuous Work.
+
+See [`VISION.md`](VISION.md) for the full engineering vision — why WCD exists, the four components it owns, the MVP, and the first production workflow.
+
 It is not a business application repository. Source code, Terraform implementation details, and project-specific delivery artifacts belong in the `repositories/` tree.
 
 ## Purpose
