@@ -12,6 +12,7 @@
 - **Approved** — reviewed and awaiting merge.
 - **Merged** — the PR has been merged to `main`. A pure GitHub fact, nothing more — **not a synonym for Completed.** See `roadmap/roadmap-engine.md`.
 - **Blocked** — cannot proceed: an unresolved external dependency, or an Escalation awaiting a specific decision-maker. Not terminal — resumes once the blocking condition clears. See `roadmap/roadmap-engine.md`.
+- **Escalated** — frozen at its current stage because a contested or authority-exceeding call can't be resolved at the normal review level; resumes from where it left off once a specific named decision-maker resolves it. Not terminal. See `decision/decision-engine.md`'s Decision State Machine.
 - **Deferred** — valid, but a Human decided not to proceed right now. Not terminal — resumes when its revisit condition is met. See `roadmap/roadmap-engine.md`.
 - **Completed** — everything `Merged` implies, plus: post-merge Validation passed, this Roadmap synchronized, Knowledge Promotion evaluated, and no required deliverables remain. See `roadmap/roadmap-engine.md`'s `Completion` transition for the full evidence checklist.
 - **Closed** — ended without merge, with reason recorded.
