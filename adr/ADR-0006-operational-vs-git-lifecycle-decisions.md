@@ -1,6 +1,6 @@
 # ADR-0006: Operational Decision Layer vs. Git-Lifecycle Decision Engine
 
-**Status:** Proposed — 2026-07-22. This PR is still Draft; status moves to Adopted on merge, not before.
+**Status:** Adopted — 2026-07-22, merged via PR #15 (`feature/decision-layer-reconciliation`). Proposed and adopted the same day; per this ADR's own rule, status moved to Adopted on merge.
 
 ## Context
 
