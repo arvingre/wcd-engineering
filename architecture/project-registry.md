@@ -26,6 +26,37 @@ The single, unified entry point OpenClaw (and any other AI agent — Claude Code
 
 ## Projects
 
+### dae-k8s
+
+| Field | Value |
+|---|---|
+| Project Name | dae-k8s (K8sInsight) |
+| Description | Kubernetes anomaly-detection / root-cause-analysis tool. Business logic lives in its own upstream repository; this workspace holds only the GitOps wiring (`labs/mac-platform-infra/lab/dae-k8s/`) for a lab-scale deployment. Detects Pod-level anomalies (CrashLoopBackOff, OOMKilled, ImagePullBackOff, FailedScheduling, Evicted, etc.), infers a root cause, and can notify via a generic outbound Webhook, Lark, or Telegram sink (`internal/notify/`). |
+| Repository | `https://github.com/DAELabs/dae-k8s` — this fork has no `main` branch, so Argo CD does not pull from GitHub; a private Gitea mirror (`gitea_admin/dae-k8s`) is the actual sync source (see `lab/dae-k8s/README.md` → "仓库来源"). Updates require a manual push to the Gitea mirror. |
+| Owner | TBD — not yet assigned to a specific person/team |
+| Status | Active |
+| Default Branch | `main` (Gitea mirror only — GitHub fork has no `main`) |
+| Integration Branch | N/A |
+| Local Path | Source: `/Users/arvin/Documents/devops/labs/DAELabs/dae-k8s`; GitOps wiring: `/Users/arvin/Documents/devops/labs/mac-platform-infra/lab/dae-k8s` |
+| HCP Terraform Workspace | N/A |
+| Execution Platform | Kubernetes (OrbStack, lab scale), synced by Argo CD from the Gitea mirror |
+| Related ADR | None yet |
+| Standards | None yet |
+| Dependencies | Candidate future integration, not started: the generic Webhook sink (`internal/notify/sink/webhook.go`) emits an `AnomalyEvent` payload (`type/pod/namespace/message/rootCause/suggestion/dedupKey`) structurally matching `VISION.md`'s `### 1. Goal` "Monitoring / Alerts" source and its example Goal. See `LES-0001` in `memory/organization/lessons/`. Scoped to PLAN-0006 Bootstrap (Draft) — do not build a receiver ahead of that Plan opening. |
+
+**Metadata**
+
+| Field | Value |
+|---|---|
+| Type | Application / Observability tool (lab deployment) |
+| Visibility | Private (Gitea mirror); GitHub fork visibility TBD |
+| Primary Language | Go (backend), TypeScript/React (frontend) |
+| Infrastructure | Kubernetes (OrbStack) |
+| Cloud Provider | N/A — local lab cluster |
+| Repository URL | `https://github.com/DAELabs/dae-k8s` |
+| Workspace | N/A |
+| Maintainer | TBD |
+
 ### devops-terraform-jenkins-eks
 
 | Field | Value |
